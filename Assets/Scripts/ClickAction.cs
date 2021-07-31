@@ -5,27 +5,45 @@ using UnityEngine.UI;
 
 public class ClickAction : MonoBehaviour
 {
-    private int timeScore;
+    Animator anim;
 
-    public Text cubeText;
+    private void Start() 
+    {
+        anim = gameObject.GetComponent<Animator>();
+    }
+
+    public void GetPoint()
+    {
+        if(ClickerSingleton.Instance().onGame)
+        {
+            ClickerSingleton.Instance().timeScore = ClickerSingleton.Instance().timeScore + 100;
+            ClickerSingleton.Instance().scoreText.text = (ClickerSingleton.Instance().timeScore/100).ToString();
+            anim.speed = 1;
+        }
+    }
 
     void Update()
     {
-        timeScore += (int)(Time.deltaTime*100);
-        Debug.Log("Time count: "+timeScore);
-        
-        if(Input.GetMouseButtonDown(0))
+        Debug.Log("Anim Speed: "+anim.speed);
+        if(ClickerSingleton.Instance().onGame)
         {
-            Debug.Log("mouse Click");
-            timeScore = timeScore+100;
+            if(Input.GetMouseButtonDown(0))
+            {
+                anim.speed += 3;
+            }
         }
-        ClickerSingleton.Instance().scoreText.text = timeScore.ToString();
     }
 
-    private void OnMouseDown() 
-    {
-        
-        Debug.Log("Click Cube Character");
-        cubeText.text = "Cube Click";
-    }
+            // if(ClickerSingleton.Instance().onGame)
+        // {
+        //     ClickerSingleton.Instance().timeScore += (int)(Time.deltaTime*100);
+        //     if (Input.GetMouseButtonDown(0))
+        //     {
+        //         // Debug.Log("mouse Click");
+        //         ClickerSingleton.Instance().timeScore = ClickerSingleton.Instance().timeScore + 100;
+        //     } 
+        //     // Debug.Log(ClickerSingleton.Instance().timeScore);
+        //     ClickerSingleton.Instance().scoreText.text = (ClickerSingleton.Instance().timeScore/100).ToString();
+        // }
+
 }

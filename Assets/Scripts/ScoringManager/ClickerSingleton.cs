@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class ClickerSingleton : MonoBehaviour
 {
+    [HideInInspector]
+    public int timeScore;
     public Text scoreText;
+    public bool onGame = true;
     static ClickerSingleton _instance = null;
 
     public static ClickerSingleton Instance()
